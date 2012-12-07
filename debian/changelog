@@ -1,0 +1,15 @@
+box2d (2.1.2-1) testing; urgency=low
+
+  * Initial release 2.1.2
+
+ -- Miguel Angel Garcia <miguel.garcia@gmail.com>  Fri, 07 Dec 2012 15:52:11 -0300
+
+box2d (2.0.1+dfsg1-1) unstable; urgency=low
+
+  [ Miriam Ruiz ]
+  * Initial release (Closes: #496991)
+
+  [ Barry deFreese ]
+  * Add myself to uploaders.
+
+ -- Barry deFreese <bdefreese@debian.org>  Sun, 12 Apr 2009 14:33:33 -0400

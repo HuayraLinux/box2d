@@ -1,0 +1,2 @@
+version=3
+opts="dversionmangle=s/\.dfsg\d*$//" http://sf.net/box2d/Box2D_v([\d\.]+)\.zip

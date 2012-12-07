@@ -1,0 +1,83 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+config: config-stamp
+config-stamp:
+	dh_testdir
+	$(MAKE) -f /usr/share/quilt/quilt.make patch
+	touch $@
+
+build: build-stamp
+build-stamp: config-stamp  
+	dh_testdir
+	$(MAKE) -f debian/Makefile
+	#docbook-to-man debian/box2d.sgml > box2d.1
+	touch $@
+
+clean: 
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp config-stamp
+	$(MAKE) -f debian/Makefile clean
+	$(MAKE) -f /usr/share/quilt/quilt.make unpatch
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep 
+	dh_installdirs
+	$(MAKE) -f debian/Makefile DESTDIR=$(CURDIR)/debian/tmp install
+
+# Build architecture-independent files here.
+binary-indep: install
+
+# Build architecture-dependent files here.
+binary-arch: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_installexamples
+	dh_install
+#	dh_installmenu
+#	dh_installdebconf
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_python
+#	dh_installinit
+#	dh_installcron
+#	dh_installinfo
+	dh_installman
+	dh_link
+	dh_strip --dbg-package=libbox2d0-dbg
+	dh_compress
+	dh_fixperms
+#	dh_perl
+	dh_makeshlibs
+	test -e /usr/bin/dh_buildinfo && dh_buildinfo
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+V=2.0.1
+get-orig-source:
+	rm -fr ../box2d_$(V).dfsg1.orig.tar.gz box2d-$(V) Box2D_v$(V) Box2D_v$(V).zip
+	wget http://surfnet.dl.sourceforge.net/sourceforge/box2d/Box2D_v$(V).zip
+	unzip Box2D_v$(V).zip
+	rm Box2D_v$(V).zip
+	mv Box2D_v$(V)/Box2D box2d-$(V)
+	rm -r Box2D_v$(V)
+	rm -r box2d-$(V)/Contrib/freeglut/
+	rm -r box2d-$(V)/Contrib/glui/
+	GZIP=-9 tar cvfz ../box2d_$(V).dfsg1.orig.tar.gz box2d-$(V)
+	rm -rf box2d-$(V)
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install config get-orig-source
