@@ -6,21 +6,27 @@
 config: config-stamp
 config-stamp:
 	dh_testdir
-	$(MAKE) -f /usr/share/quilt/quilt.make patch
+	rm CMakeCache.txt
+	cmake -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON
+#	$(MAKE) -f /usr/share/quilt/quilt.make patch
 	touch $@
 
 build: build-stamp
 build-stamp: config-stamp  
 	dh_testdir
-	$(MAKE) -f debian/Makefile
+	rm CMakeCache.txt
+	cmake -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON
+	$(MAKE) -f Makefile
 	#docbook-to-man debian/box2d.sgml > box2d.1
 	touch $@
 
 clean: 
 	dh_testdir
 	dh_testroot
+	rm CMakeCache.txt
+	cmake -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON
 	rm -f build-stamp config-stamp
-	$(MAKE) -f debian/Makefile clean
+	$(MAKE) -f Makefile clean
 	$(MAKE) -f /usr/share/quilt/quilt.make unpatch
 	dh_clean 
 
@@ -29,7 +35,7 @@ install: build
 	dh_testroot
 	dh_prep 
 	dh_installdirs
-	$(MAKE) -f debian/Makefile DESTDIR=$(CURDIR)/debian/tmp install
+	$(MAKE) -f Makefile DESTDIR=$(CURDIR)/debian/tmp install
 
 # Build architecture-independent files here.
 binary-indep: install
@@ -66,7 +72,7 @@ binary-arch: install
 	dh_md5sums
 	dh_builddeb
 
-V=2.0.1
+V=2.1.2
 get-orig-source:
 	rm -fr ../box2d_$(V).dfsg1.orig.tar.gz box2d-$(V) Box2D_v$(V) Box2D_v$(V).zip
 	wget http://surfnet.dl.sourceforge.net/sourceforge/box2d/Box2D_v$(V).zip

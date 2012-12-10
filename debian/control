@@ -2,14 +2,14 @@ Source: box2d
 Section: libs
 Priority: optional
 Maintainer: Miguel Angel Garcia <miguel.garcia@gmail.com>
-Build-Depends: debhelper (>= 7), quilt, dh-buildinfo, freeglut3-dev, libxi-dev
+Build-Depends: debhelper (>= 7), quilt, dh-buildinfo, freeglut3-dev, libxi-dev, cmake
 Standards-Version: 3.8.1
 Homepage: http://www.box2d.org/
 
-Package: libbox2d-dev
+Package: libbox2d1-dev
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbox2d0 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbox2d1 (= ${binary:Version})
 Description: 2D physics engine - development files
  2D rigid body simulation library for games. Programmers can use it in
  their games to make objects move in believable ways and make the world
@@ -20,7 +20,7 @@ Description: 2D physics engine - development files
  .
  This package contains the development libraries and headers.
 
-Package: libbox2d0
+Package: libbox2d1
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: 2D physics engine
@@ -31,10 +31,10 @@ Description: 2D physics engine
  an animator to move your actors around, you can let Sir Isaac Newton do
  the directing.
 
-Package: libbox2d0-dbg
+Package: libbox2d1-dbg
 Section: debug
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbox2d0 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbox2d1 (= ${binary:Version})
 Priority: extra
 Description: 2D physics engine - debugging symbols
  2D rigid body simulation library for games. Programmers can use it in
