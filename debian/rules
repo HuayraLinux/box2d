@@ -60,7 +60,7 @@ binary-arch: install
 #	dh_installinfo
 	dh_installman
 	dh_link
-	dh_strip --dbg-package=libbox2d0-dbg
+	dh_strip --dbg-package=libbox2d1-dbg
 	dh_compress
 	dh_fixperms
 #	dh_perl
